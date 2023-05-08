@@ -6,6 +6,7 @@ from rest_framework import status, serializers
 from rest_framework.response import Response
 
 from recipes.models import Ingredient, RecipeIngredient
+from users.models import Subscription
 
 
 class Base64ImageField(serializers.ImageField):
@@ -58,3 +59,16 @@ def delete_model_instance(request, model_name, instance, error_message):
 
     model_name.objects.filter(user=request.user, recipe=instance).delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+def check_request(self, obj, model):
+    """Проверяем, что request есть, user не аноним."""
+    request = self.context.get('request')
+
+    if not request or request.user.is_anonymous:
+        return False
+
+    if model == Subscription:
+        return model.objects.filter(user=request.user, author=obj.id).exists()
+
+    return model.objects.filter(recipe=obj, user=request.user).exists()

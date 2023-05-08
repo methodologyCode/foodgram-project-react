@@ -2,7 +2,7 @@ from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from api.helpers import Base64ImageField, create_ingredients
+from api.helpers import Base64ImageField, create_ingredients, check_request
 from recipes.models import (Tag, Ingredient, RecipeIngredient, Recipe,
                             Favorite,
                             ShoppingCart)
@@ -28,11 +28,10 @@ class UserGetSerializer(UserSerializer):
                   'last_name', 'is_subscribed')
 
     def get_is_subscribed(self, obj):
-        request = self.context.get('request')
-        return (request.user.is_authenticated
-                and Subscription.objects.filter(
-                    user=request.user, author=obj
-                ).exists())
+        """Получаем статус подписки на автора."""
+        if check_request(self, obj, Subscription):
+            return True
+        return False
 
 
 class UserSubscribeInfoSerializer(UserGetSerializer):
@@ -154,18 +153,14 @@ class RecipeGetSerializer(serializers.ModelSerializer):
                   'image', 'text', 'cooking_time')
 
     def get_is_favorited(self, obj):
-        request = self.context.get('request')
-        return (request and request.user.is_authenticated
-                and Favorite.objects.filter(
-                    user=request.user, recipe=obj
-                ).exists())
+        if check_request(self, obj, Favorite):
+            return True
+        return False
 
     def get_is_in_shopping_cart(self, obj):
-        request = self.context.get('request')
-        return (request and request.user.is_authenticated
-                and ShoppingCart.objects.filter(
-                    user=request.user, recipe=obj
-                ).exists())
+        if check_request(self, obj, ShoppingCart):
+            return True
+        return False
 
 
 class RecipeCreateSerializer(serializers.ModelSerializer):
