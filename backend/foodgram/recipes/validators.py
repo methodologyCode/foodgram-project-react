@@ -12,3 +12,14 @@ def validate_slug(value):
         )
 
     return value
+
+
+def validate_color(value):
+    regex = r'^#[A-Fa-f0-9]{6}$'
+
+    if not re.match(regex, value):
+        raise ValidationError(
+            'Некорректный цвет'
+        )
+
+    return value

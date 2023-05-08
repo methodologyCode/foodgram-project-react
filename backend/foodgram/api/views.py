@@ -17,7 +17,7 @@ from .serializers import (TagSerialiser, IngredientSerializer,
                           RecipeGetSerializer, RecipeCreateSerializer,
                           FavoriteSerializer, ShoppingCartSerializer,
                           UserSubscribeSerializer,
-                          UserSubscribeInfoSerializer)
+                          UserSubscribeInfoSerializer, )
 
 
 class UserSubscribeView(APIView):

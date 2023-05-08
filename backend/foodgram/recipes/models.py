@@ -2,7 +2,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 
 from users.models import User
-from .validators import validate_slug
+from .validators import validate_slug, validate_color
 
 
 class Tag(models.Model):
@@ -14,7 +14,8 @@ class Tag(models.Model):
     color = models.CharField(
         verbose_name='Цвет в HEX',
         max_length=7,
-        unique=True
+        unique=True,
+        validators=[validate_color]
     )
     slug = models.SlugField(
         verbose_name='Слаг',
