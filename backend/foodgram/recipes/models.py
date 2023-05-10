@@ -6,6 +6,7 @@ from .validators import validate_slug, validate_color
 
 
 class Tag(models.Model):
+    REQUIRED_FIELDS = ['name', 'color', 'slug']
     name = models.CharField(
         verbose_name='Название',
         max_length=200,
@@ -33,6 +34,7 @@ class Tag(models.Model):
 
 
 class Ingredient(models.Model):
+    REQUIRED_FIELDS = ['name', 'measurement_unit']
     name = models.CharField(
         verbose_name='Название',
         max_length=200,
@@ -51,6 +53,10 @@ class Ingredient(models.Model):
 
 
 class Recipe(models.Model):
+    REQUIRED_FIELDS = [
+        'name', 'text', 'image', 'cooking_time',
+        'tags', 'ingredients', 'author'
+    ]
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -86,9 +92,12 @@ class Recipe(models.Model):
             )
         ]
     )
+    pub_date = models.DateTimeField(verbose_name='Дата публикации',
+                                    auto_now_add=True,
+                                    db_index=True)
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-pub_date']
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
 
