@@ -19,11 +19,7 @@ class IngredientAdmin(admin.ModelAdmin):
     search_fields = ('name', 'measurement_unit')
     list_filter = ('name',)
     empty_value_display = settings.EMPTY_VALUE_DISPLAY
-
-
-class RecipeIngredientInline(admin.TabularInline):
-    model = RecipeIngredient
-
+    
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
@@ -31,9 +27,6 @@ class RecipeAdmin(admin.ModelAdmin):
     search_fields = ('name', 'author')
     list_filter = ('name', 'author', 'tags', 'pub_date')
     empty_value_display = settings.EMPTY_VALUE_DISPLAY
-    inlines = [
-        RecipeIngredientInline,
-    ]
 
     def favorites_amount(self, obj):
         return obj.favorites.count()
