@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from rest_framework.exceptions import ValidationError
 
 from .validators import validate_username
 
@@ -78,6 +79,10 @@ class Subscription(models.Model):
                 name='unique_user_author'
             )
         ]
+
+    def clean(self):
+        if self.user == self.author:
+            raise ValidationError('Подписка на самого себя.')
 
     def __str__(self):
         return f'{self.user.username} подписан на {self.author.username}'
