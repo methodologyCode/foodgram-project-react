@@ -67,7 +67,7 @@ http://localhost/api/
 
 ``` python3 manage.py runserver ``` 
 
-### В API доступна документация
+### В API доступна документация:
 
 ``` http://localhost/redoc ```
 
