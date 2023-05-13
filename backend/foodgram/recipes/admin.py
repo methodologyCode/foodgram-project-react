@@ -19,7 +19,7 @@ class IngredientAdmin(admin.ModelAdmin):
     search_fields = ('name', 'measurement_unit')
     list_filter = ('name',)
     empty_value_display = settings.EMPTY_VALUE_DISPLAY
-    
+
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
