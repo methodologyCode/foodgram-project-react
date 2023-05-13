@@ -9,7 +9,7 @@ services:
       - ./.env
   
   web:
-    build: ../backend
+    image: method4354/foodgram
     restart: always
     volumes:
       - static_value:/app/static/
