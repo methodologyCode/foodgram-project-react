@@ -69,7 +69,7 @@ http://localhost/api/
 
 ### В API доступна документация.
 
-``` http://localhost/redoc ```
+``` http://localhost/api/docs ```
 
 
 
