@@ -3,7 +3,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 
 from users.models import User
-from .validators import validate_slug, validate_color
+from .validators import validate_slug, validate_color, validate_border
 
 
 class Tag(models.Model):
@@ -88,7 +88,8 @@ class Recipe(models.Model):
     cooking_time = models.IntegerField(
         verbose_name='Время приготовления, мин',
         validators=[
-            MinValueValidator(settings.MIN_VALUE, 'Минимальное кол-во')
+            MinValueValidator(settings.MIN_VALUE, 'Минимальное кол-во'),
+            validate_border
         ]
     )
     pub_date = models.DateTimeField(verbose_name='Дата публикации',
@@ -121,7 +122,8 @@ class RecipeIngredient(models.Model):
     amount = models.IntegerField(
         verbose_name='Количество',
         validators=[
-            MinValueValidator(settings.MIN_VALUE, 'Минимальное кол-во')
+            MinValueValidator(settings.MIN_VALUE, 'Минимальное кол-во'),
+            validate_border
         ]
     )
 

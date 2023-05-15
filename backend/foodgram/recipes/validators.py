@@ -23,3 +23,12 @@ def validate_color(value):
         )
 
     return value
+
+
+def validate_border(value):
+    num = 2147483647
+
+    if value > num:
+        raise ValidationError('Слишком большое кол-во')
+
+    return value
