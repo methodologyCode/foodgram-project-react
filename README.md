@@ -13,8 +13,8 @@
 Запустить docker-compose:
 
 ```
+docker-compose up -d --build
 docker-compose up
-
 ```
 
 После окончания сборки контейнеров выполнить миграции:
